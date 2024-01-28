@@ -1,6 +1,10 @@
+import Banner from "Components/Banner";
+
 const Home = () => {
     return (
-        <h1>Olá Mundo</h1>
+        <main>
+            <Banner />
+        </main>
     )
 }
 
