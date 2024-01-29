@@ -15,7 +15,7 @@ const PostRecomendation = ({idActivePost}) => {
             <div className={styles.recomendationPosts}>
                 {recomendationPosts.map((item) => {
                     return (
-                        <PostCard post={item}/>
+                        <PostCard post={item} key={item.id}/>
                     )
                 })}
             </div>   
