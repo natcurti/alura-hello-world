@@ -1,8 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Routes, Route } from 'react-router-dom';
 import posts from 'json/posts.json';
 import PostModel from 'Components/PostModel';
 import ReactMarkdown from 'react-markdown';
 import './Post.css';
+import NotFound from 'Pages/NotFound';
+import DefaultPage from 'Components/DefaultPage';
+import PostRecomendation from 'Components/PostRecomendation';
 
 const Post = () => {
     const params = useParams();
@@ -12,17 +15,24 @@ const Post = () => {
     })
 
     if(!activePost){
-        return <h1>Post não encontrado</h1>
+        return <NotFound/>
     }
 
     return (
-        <PostModel cover={`/posts/${activePost.id}/capa.png`} title={activePost.title}>
-            <div className='post-markdown-container'>
-                <ReactMarkdown>
-                    {activePost.text}
-                </ReactMarkdown>
-            </div>
-        </PostModel>
+        <Routes>
+            <Route path='*' element={<DefaultPage/>}>
+                <Route index element={
+                    <PostModel cover={`/posts/${activePost.id}/capa.png`} title={activePost.title}>
+                        <div className='post-markdown-container'>
+                            <ReactMarkdown>
+                                {activePost.text}
+                            </ReactMarkdown>
+                         </div>
+                         <PostRecomendation idActivePost={activePost.id}/>
+                    </PostModel>
+                }/>
+            </Route>
+        </Routes>
     )
 }
 
