@@ -1,12 +1,28 @@
-import { useParams } from "react-router-dom";
-
+import { useParams } from 'react-router-dom';
+import posts from 'json/posts.json';
+import PostModel from 'Components/PostModel';
+import ReactMarkdown from 'react-markdown';
+import './Post.css';
 
 const Post = () => {
     const params = useParams();
-    console.log(params);
+    
+    const activePost = posts.find((item) => {
+        return item.id === Number(params.id);
+    })
+
+    if(!activePost){
+        return <h1>Post não encontrado</h1>
+    }
 
     return (
-        <h1>Post {params.id} </h1>
+        <PostModel cover={`/posts/${activePost.id}/capa.png`} title={activePost.title}>
+            <div className='post-markdown-container'>
+                <ReactMarkdown>
+                    {activePost.text}
+                </ReactMarkdown>
+            </div>
+        </PostModel>
     )
 }
 
